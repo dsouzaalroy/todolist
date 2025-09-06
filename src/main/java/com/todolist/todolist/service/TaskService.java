@@ -29,12 +29,14 @@ public class TaskService {
         taskRepository.delete(taskToDelete);
     }
 
-    public void updateState(Long id, State state) {
-        Task taskToUpdate = getTask(id);
-        if (taskToUpdate.getState() != state) {
-            taskToUpdate.setState(state);
-            taskRepository.save(taskToUpdate);
-        }
+    public Task updateTask(Task task) {
+        Task taskToUpdate = getTask(task.getId());
+        taskToUpdate.setState(task.getState() != null ? task.getState() : taskToUpdate.getState());
+        taskToUpdate.setDescription(task.getDescription() != null ? task.getDescription() : taskToUpdate.getDescription());
+        taskToUpdate.setState(task.getState() != null ? task.getState() : taskToUpdate.getState());
+        taskToUpdate.setTitle(task.getTitle() != null ? task.getTitle() : taskToUpdate.getTitle());
+        taskToUpdate.setDueDate(task.getDueDate() != null ? task.getDueDate() : taskToUpdate.getDueDate());
+        return taskRepository.save(taskToUpdate);
     }
 
     public Task getTask(Long id) {

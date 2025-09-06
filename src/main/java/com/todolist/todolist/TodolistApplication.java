@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories//("com.todolist.todolist.repository.*")
-@ComponentScan//(basePackages = "com.todolist.todolist.*")
+@EnableJpaRepositories
+@ComponentScan
 public class TodolistApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TodolistApplication.class, args);

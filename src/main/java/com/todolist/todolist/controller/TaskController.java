@@ -13,7 +13,7 @@ import java.util.List;
 public class TaskController {
     private final TaskService taskService;
 
-    public TaskController (TaskService taskService) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
@@ -22,8 +22,18 @@ public class TaskController {
         task.setState(State.READY);
         try {
             task = taskService.createTask(task);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
-        catch (IllegalArgumentException e) {
+
+        return ResponseEntity.ok().body(task);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Task> updateTask(@RequestBody Task task) {
+        try {
+            task = taskService.updateTask(task);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -36,8 +46,7 @@ public class TaskController {
 
         try {
             task = taskService.getTask(id);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             // TODO Send error message back
             return ResponseEntity.badRequest().build();
         }
@@ -50,8 +59,7 @@ public class TaskController {
         List<Task> tasks;
         try {
             tasks = taskService.getTasks();
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
 
