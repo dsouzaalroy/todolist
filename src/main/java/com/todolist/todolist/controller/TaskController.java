@@ -3,6 +3,7 @@ package com.todolist.todolist.controller;
 import com.todolist.todolist.dto.State;
 import com.todolist.todolist.dto.Task;
 import com.todolist.todolist.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,50 +21,32 @@ public class TaskController {
     @PostMapping("/create")
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         task.setState(State.READY);
-        try {
-            task = taskService.createTask(task);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        task = taskService.createTask(task);
 
         return ResponseEntity.ok().body(task);
     }
 
     @PutMapping("/update")
     public ResponseEntity<Task> updateTask(@RequestBody Task task) {
-        try {
-            task = taskService.updateTask(task);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
-
+        task = taskService.updateTask(task);
         return ResponseEntity.ok().body(task);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTask(@PathVariable("id") Long id) {
-        Task task;
-
-        try {
-            task = taskService.getTask(id);
-        } catch (IllegalArgumentException e) {
-            // TODO Send error message back
-            return ResponseEntity.badRequest().build();
-        }
-
+        Task task = taskService.getTask(id);
         return ResponseEntity.ok().body(task);
     }
 
     @GetMapping
     public ResponseEntity<List<Task>> getTasks() {
-        List<Task> tasks;
-        try {
-            tasks = taskService.getTasks();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
-
+        List<Task> tasks = taskService.getTasks();
         return ResponseEntity.ok().body(tasks);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleException() {
+        return ResponseEntity.badRequest()
+                .body("Please inspect the request as it was invalid");
+    }
 }

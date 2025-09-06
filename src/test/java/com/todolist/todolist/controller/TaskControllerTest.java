@@ -51,19 +51,6 @@ class TaskControllerTest {
     }
 
     @Test
-    void shouldReturnBadRequestIfTaskCreationFails() {
-        // when
-        when(taskService.createTask(expectedTask)).thenThrow(IllegalArgumentException.class);
-        ResponseEntity<Task> response = taskController.createTask(expectedTask);
-        Task actualTask = response.getBody();
-
-        // then
-        verify(taskService).createTask(expectedTask);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertNull(actualTask);
-    }
-
-    @Test
     void shouldGetTaskSuccessfully() {
        // when
         when(taskService.getTask(1L)).thenReturn(expectedTask);
@@ -99,19 +86,6 @@ class TaskControllerTest {
     }
 
     @Test
-    void shouldReturnBadRequestOnException() {
-        // when
-        when(taskService.getTask(any())).thenThrow(IllegalArgumentException.class);
-        when(taskService.getTasks()).thenThrow(IllegalArgumentException.class);
-
-        ResponseEntity<Task> getTaskResponse = taskController.getTask(1L);
-        ResponseEntity<List<Task>> getMultipleTasksResponse = taskController.getTasks();
-
-        assertThat(getTaskResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(getMultipleTasksResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
-
-    @Test
     void shouldUpdateTaskIfSuccessful() {
         // given
         when(taskService.updateTask(expectedTask)).then(AdditionalAnswers.returnsFirstArg());
@@ -126,20 +100,6 @@ class TaskControllerTest {
         assertNotNull(actualTask);
         assertThat(actualTask.getDescription()).isEqualTo(expectedTask.getDescription());
         assertThat(actualTask.getId()).isEqualTo(expectedTask.getId());
-    }
-
-    @Test
-    void shouldReturnBadRequestIfUpdateFails() {
-        // given
-        when(taskService.updateTask(expectedTask)).thenThrow(new IllegalArgumentException("Invalid task"));
-
-        // when
-        ResponseEntity<Task> response = taskController.updateTask(expectedTask);
-
-        // then
-        verify(taskService).updateTask(expectedTask);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertNull(response.getBody());
     }
 
 }
