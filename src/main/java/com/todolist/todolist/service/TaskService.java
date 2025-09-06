@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class TaskService {
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
@@ -19,9 +19,9 @@ public class TaskService {
         return (List<Task>) taskRepository.findAll();
     }
 
-    public void createTask(Task task) {
+    public Task createTask(Task task) {
         // TODO Could we validate anything here?
-        taskRepository.save(task);
+        return taskRepository.save(task);
     }
 
     public void deleteTask(Long id) {
@@ -36,12 +36,6 @@ public class TaskService {
             taskRepository.save(taskToUpdate);
         }
     }
-
-//    public void updateTask(Task task) {
-//        Task taskToUpdate = taskRepository.findById(task.id()).orElse(null);
-//        validateTask(taskToUpdate, task.id());
-//        if(task.date())
-//    }
 
     public Task getTask(Long id) {
         Task task = taskRepository.findById(id).orElse(null);

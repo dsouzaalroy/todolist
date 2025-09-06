@@ -21,7 +21,7 @@ public class TaskController {
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         task.setState(State.READY);
         try {
-            taskService.createTask(task);
+            task = taskService.createTask(task);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
@@ -46,7 +46,7 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getTask() {
+    public ResponseEntity<List<Task>> getTasks() {
         List<Task> tasks;
         try {
             tasks = taskService.getTasks();
