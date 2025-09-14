@@ -22,7 +22,6 @@ public class TaskController {
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         task.setState(State.READY);
         task = taskService.createTask(task);
-
         return ResponseEntity.ok().body(task);
     }
 
@@ -46,6 +45,7 @@ public class TaskController {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleException() {
+        // TODO Needs much better error handling
         return ResponseEntity.badRequest()
                 .body("Please inspect the request as it was invalid");
     }

@@ -1,6 +1,5 @@
 package com.todolist.todolist.service;
 
-import com.todolist.todolist.dto.State;
 import com.todolist.todolist.dto.Task;
 import com.todolist.todolist.repository.TaskRepository;
 import org.springframework.stereotype.Service;
