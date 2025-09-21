@@ -131,7 +131,7 @@ public class TaskControllerIntegrationTest {
         Task tempRequestTask = new Task();
         tempRequestTask.setId(1L);
         tempRequestTask.setDescription("I am the new description");
-        tempRequestTask.setState(State.COMPLETED);
+        tempRequestTask.setState(State.DONE);
         // when
         MvcResult mvcResult = mockMvc.perform(
                 put("/tasks/update")
@@ -152,7 +152,7 @@ public class TaskControllerIntegrationTest {
         Task tempRequestTask = new Task();
         tempRequestTask.setId(1L);
         tempRequestTask.setDescription("I am the new description");
-        tempRequestTask.setState(State.COMPLETED);
+        tempRequestTask.setState(State.DONE);
         String jsonRequest = objectMapper.writeValueAsString(tempRequestTask);
         jsonRequest = jsonRequest.replaceAll("COMPLETED", "FINISHED");
         // when
@@ -214,7 +214,7 @@ public class TaskControllerIntegrationTest {
         task.setTitle("Title");
         task.setDescription(desc);
         task.setDueDate(LocalDate.of(2025, 9, 13));
-        task.setState(State.READY);
+        task.setState(State.TODO);
         taskRepository.save(task);
     }
 }

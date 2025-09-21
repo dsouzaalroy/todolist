@@ -1,7 +1,7 @@
 package com.todolist.todolist.dto;
 
 public enum State {
-    READY,
+    TODO,
     DOING,
-    COMPLETED,
+    DONE,
 }

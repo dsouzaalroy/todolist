@@ -47,7 +47,7 @@ class TaskControllerTest {
         assertNotNull(actualTask);
         assertThat(actualTask.getDescription()).isEqualTo(expectedTask.getDescription());
         assertThat(actualTask.getId()).isEqualTo(expectedTask.getId());
-        assertThat(actualTask.getState()).isEqualTo(State.READY);
+        assertThat(actualTask.getState()).isEqualTo(State.TODO);
     }
 
     @Test

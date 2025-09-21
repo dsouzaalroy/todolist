@@ -3,7 +3,6 @@ package com.todolist.todolist.controller;
 import com.todolist.todolist.dto.State;
 import com.todolist.todolist.dto.Task;
 import com.todolist.todolist.service.TaskService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,7 @@ public class TaskController {
 
     @PostMapping("/create")
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        task.setState(State.READY);
+        task.setState(State.TODO);
         task = taskService.createTask(task);
         return ResponseEntity.ok().body(task);
     }

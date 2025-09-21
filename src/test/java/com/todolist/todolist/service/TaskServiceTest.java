@@ -34,7 +34,7 @@ class TaskServiceTest {
         expectedTask.setTitle("I am a Title");
         expectedTask.setId(1L);
         expectedTask.setDescription("I am a description");
-        expectedTask.setState(State.READY);
+        expectedTask.setState(State.TODO);
         expectedTask.setDueDate(LocalDate.MAX);
     }
 
@@ -64,7 +64,7 @@ class TaskServiceTest {
         update.setId(1L);
         update.setTitle("New Title");
         update.setDescription("New Description");
-        update.setState(State.COMPLETED);
+        update.setState(State.DONE);
         update.setDueDate(java.time.LocalDate.of(2025, 9, 6));
 
         // when
@@ -75,7 +75,7 @@ class TaskServiceTest {
         Task updated = taskService.updateTask(update);
         assertEquals("New Title", updated.getTitle());
         assertEquals("New Description", updated.getDescription());
-        assertEquals(State.COMPLETED, updated.getState());
+        assertEquals(State.DONE, updated.getState());
         assertEquals(java.time.LocalDate.of(2025, 9, 6), updated.getDueDate());
     }
 
@@ -85,7 +85,7 @@ class TaskServiceTest {
         update.setId(1L);
         update.setTitle(null); // should not overwrite
         update.setDescription("Updated Description");
-        update.setState(State.COMPLETED);
+        update.setState(State.DONE);
         update.setDueDate(null); // should not overwrite
 
         when(taskRepository.findById(1L)).thenReturn(java.util.Optional.of(expectedTask));
