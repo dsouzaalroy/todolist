@@ -141,7 +141,7 @@ public class TaskControllerIntegrationTest {
         final JSONObject actualTask = new JSONObject(mvcResult.getResponse().getContentAsString());
         assertAll(() -> {
             assertThat(actualTask.getString("description")).isEqualTo("I am the new description");
-            assertThat(actualTask.getString("state")).isEqualTo("COMPLETED");
+            assertThat(actualTask.getString("state")).isEqualTo(String.valueOf(State.DONE));
         });
     }
 
@@ -154,7 +154,7 @@ public class TaskControllerIntegrationTest {
         tempRequestTask.setDescription("I am the new description");
         tempRequestTask.setState(State.DONE);
         String jsonRequest = objectMapper.writeValueAsString(tempRequestTask);
-        jsonRequest = jsonRequest.replaceAll("COMPLETED", "FINISHED");
+        jsonRequest = jsonRequest.replaceAll(String.valueOf(State.DONE), "FINISHED");
         // when
         mockMvc.perform(
                 put("/tasks/update")
@@ -181,7 +181,7 @@ public class TaskControllerIntegrationTest {
         assertAll(() -> {
             // assert id and state are correctly defined
             assertThat(actualTask.getInt("id")).isEqualTo(1);
-            assertThat(actualTask.getString("state")).isEqualTo("READY");
+            assertThat(actualTask.getString("state")).isEqualTo(String.valueOf(State.TODO));
             assertThat(actualTask.getString("title")).isEqualTo(tempRequestTask.getTitle());
             assertThat(actualTask.getString("description")).isEqualTo(tempRequestTask.getDescription());
             assertThat(actualTask.getString("dueDate")).isEqualTo(tempRequestTask.getDueDate().toString());
