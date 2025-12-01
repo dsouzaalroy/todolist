@@ -9,7 +9,7 @@ export interface Task {
 export type TaskDTO = Omit<Task, 'id' | 'state'>
 
 export enum State {
-  READY = "READY",
+  TODO = "TODO",
   DOING = "DOING",
-  COMPLETED = "COMPLETED"
+  DONE = "DONE"
 }
